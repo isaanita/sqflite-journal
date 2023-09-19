@@ -2,21 +2,22 @@ import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart' as sql;
 
 // buat create table
-
-class SQLHelper {
-  static Future<void> createTable(sql.Database database) async {
-    await database.execute("""CREATE TABLE items(
+  class SQLHelper {
+  static Future<void> createTables(sql.Database database) async {
+    await database.execute("""CREATE TABLE items (
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       title TEXT,
-      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP)""");
+      description TEXT,
+      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )""");
   }
 
-// add database name
+  // add database name
 
   static Future<sql.Database> db() async {
-    return sql.openDatabase('jurnal.db', version: 1,
+    return sql.openDatabase('dbApp.db', version: 1,
         onCreate: (sql.Database database, int version) async {
-      await createTable(database);
+      await createTables(database);
     });
   }
 
